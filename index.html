@@ -1,6 +1,109 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>XENEON EDGE · Neon Calendar</title><style>
-:root{--accent:#ff00ff;--rgb:255,0,255;--opacity:.26;--round:34px;--glow:.5;--scale:1}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent;font-family:Pretendard,'Malgun Gothic','Segoe UI',sans-serif;color:#f7f6ff}button{font:inherit;cursor:pointer} .app{height:100%;padding:10px;overflow:hidden}.shell{position:relative;isolation:isolate;width:100%;height:100%;min-height:0;overflow:hidden;border-radius:var(--round);border:1.5px solid rgb(var(--rgb)/.86);box-shadow:inset 0 0 0 1px rgb(255 255 255/.05),0 0 calc(20px * var(--glow)) rgb(var(--rgb)/.34),0 12px 35px rgb(0 0 0/.24)}.shell:before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(115deg,rgba(10,14,29,var(--opacity)),rgba(22,15,34,var(--opacity)) 62%,rgba(7,21,34,var(--opacity)));z-index:-2}.shell:after{content:'';position:absolute;pointer-events:none;inset:0;border-radius:inherit;background:radial-gradient(ellipse at 5% 5%,rgb(var(--rgb)/.15),transparent 45%),radial-gradient(ellipse at 98% 90%,rgb(0 206 242/.09),transparent 48%);z-index:-1}.layout{height:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(255px,28%);gap:clamp(15px,2.3vw,42px);padding:clamp(18px,2.25vw,42px)}.left{min-width:0;min-height:0;display:flex;flex-direction:column}.top{height:25%;min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:18px}.kicker{font-size:clamp(11px,1.2vw,17px);font-weight:700;letter-spacing:.35em;color:#e1c8eb;text-transform:uppercase;margin-bottom:3px}.heading{font-size:clamp(36px,4vw,78px);letter-spacing:-.065em;line-height:1.04;font-weight:780;white-space:nowrap;text-shadow:0 0 24px rgb(var(--rgb)/.12)}.heading .month{color:var(--accent)}.nav{display:flex;gap:12px}.nav button{background:rgb(255 255 255/.07);color:white;border:1px solid rgb(255 255 255/.19);width:clamp(40px,3.9vw,56px);height:clamp(40px,3.9vw,56px);border-radius:50%;font-size:25px;font-weight:350;transition:background .15s,border-color .15s}.nav button:hover{background:rgb(var(--rgb)/.21);border-color:var(--accent)}.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-top:clamp(12px,2vh,22px);margin-bottom:4px;align-items:center}.week span{text-align:center;color:#d9d2e4;font-weight:700;font-size:clamp(14px,1.6vw,24px)}.week span:first-child{color:#ffadc9}.week span:last-child{color:#9ddcfe}.days{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:repeat(6,minmax(0,1fr));align-items:stretch;gap:1px}.day{display:flex;align-items:center;justify-content:center;position:relative;font-size:clamp(21px,2.3vw,39px);font-weight:570;letter-spacing:-.04em;font-variant-numeric:tabular-nums}.day.muted{color:#918ba1}.day.today{font-weight:780;color:#fff}.day.today:before{content:'';position:absolute;width:min(3.6vw,58px);height:min(3.6vw,58px);min-width:37px;min-height:37px;max-height:94%;border-radius:50%;z-index:-1;background:radial-gradient(circle at 35% 25%,rgb(255 255 255/.18),transparent 62%),rgb(var(--rgb)/.75);box-shadow:0 0 19px rgb(var(--rgb)/.55)}.right{position:relative;min-width:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding-left:clamp(14px,2.3vw,44px)}.right:before{content:'';position:absolute;width:1px;left:0;top:14%;height:72%;background:linear-gradient(transparent,rgb(255 255 255/.14),transparent)}.right .micro{font-size:clamp(12px,1.1vw,17px);letter-spacing:.22em;font-weight:700;color:#e8c8ea}.today-num{font-size:clamp(74px,11vw,190px);font-weight:760;line-height:1.05;letter-spacing:-.085em;text-shadow:0 0 45px rgb(var(--rgb)/.18)}.today-label{font-size:clamp(17px,2.2vw,34px);font-weight:650;color:#f9eaff;margin:0 0 clamp(14px,3vw,35px)}.time{font-size:clamp(27px,3.5vw,56px);font-variant-numeric:tabular-nums;font-weight:650;letter-spacing:-.04em;color:#eae5f3}.bottom-accent{height:3px;width:57px;background:linear-gradient(90deg,var(--accent),#68dfff);border-radius:9px;margin-top:18px;box-shadow:0 0 15px rgb(var(--rgb)/.45)}
-@media(max-width:680px){.layout{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr);padding:14px}.right{display:none}.top{min-height:65px;height:22%}.heading{font-size:clamp(28px,6vw,45px)}.kicker{font-size:9px}.day{font-size:clamp(15px,3.2vw,24px)}.week span{font-size:clamp(12px,2.4vw,18px)}.nav button{width:34px;height:34px;font-size:18px}.day.today:before{min-width:31px;min-height:31px}}
-</style></head><body><div class="app"><main class="shell"><div class="layout"><section class="left"><header class="top"><div><div class="kicker">CALENDAR / MONTHLY</div><div class="heading" id="heading"></div></div><div class="nav"><button id="prev" aria-label="이전 달">‹</button><button id="next" aria-label="다음 달">›</button></div></header><div class="week"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div><div class="days" id="days"></div></section><aside class="right"><div class="micro">TODAY</div><div class="today-num" id="todayNum"></div><div class="today-label" id="todayLabel"></div><div class="time" id="clock"></div><div class="bottom-accent"></div></aside></div></main></div><script>
-const q=new URLSearchParams(location.search),color=/^#[0-9a-f]{6}$/i.test(q.get('color')||'')?q.get('color'):'#ff00ff';const rgb=[1,3,5].map(i=>parseInt(color.slice(i,i+2),16));const clamp=(v,min,max,fallback)=>Number.isFinite(+v)&&v!==null?Math.max(min,Math.min(max,+v)):fallback;const root=document.documentElement;root.style.setProperty('--accent',color);root.style.setProperty('--rgb',rgb.join(','));root.style.setProperty('--opacity',clamp(q.get('opacity'),0,100,26)/100);root.style.setProperty('--round',clamp(q.get('round'),16,64,34)+'px');root.style.setProperty('--glow',clamp(q.get('glow'),0,100,50)/100);let now=new Date(),viewYear=now.getFullYear(),viewMonth=now.getMonth();const weekKor=['일요일','월요일','화요일','수요일','목요일','금요일','토요일'];function render(){const first=new Date(viewYear,viewMonth,1).getDay(),last=new Date(viewYear,viewMonth+1,0).getDate();document.getElementById('heading').innerHTML=`${viewYear}년 <span class="month">${viewMonth+1}월</span>`;const area=document.getElementById('days');area.replaceChildren();for(let i=0;i<42;i++){const n=i-first+1;const d=document.createElement('div');d.className='day';if(n<1||n>last)d.classList.add('muted');const actual=new Date(viewYear,viewMonth,n);d.textContent=actual.getDate();if(actual.getFullYear()===now.getFullYear()&&actual.getMonth()===now.getMonth()&&actual.getDate()===now.getDate())d.classList.add('today');area.appendChild(d)}}function tick(){const old=now;now=new Date();if(old.toDateString()!==now.toDateString()&&viewYear===old.getFullYear()&&viewMonth===old.getMonth()){viewYear=now.getFullYear();viewMonth=now.getMonth();render()}document.getElementById('todayNum').textContent=now.getDate();document.getElementById('todayLabel').textContent=`${now.getFullYear()}년 ${now.getMonth()+1}월 · ${weekKor[now.getDay()]}`;document.getElementById('clock').textContent=now.toLocaleTimeString('ko-KR',{hour12:false,hour:'2-digit',minute:'2-digit'})}document.getElementById('prev').onclick=()=>{viewMonth--;if(viewMonth<0){viewMonth=11;viewYear--}render()};document.getElementById('next').onclick=()=>{viewMonth++;if(viewMonth>11){viewMonth=0;viewYear++}render()};render();tick();setInterval(tick,10000);
-</script></body></html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XENEON EDGE RGB Calendar v7</title>
+<style>
+:root{--accent:#ff00ff;--rgb:255,0,255;--bg:0.92;--round:28px;--glow:.42;--sun:#ff6279;--sat:#63afff;--cyan:#5fc8ff;--purple:#b779ff}
+*{box-sizing:border-box}
+html,body{height:100%;width:100%;margin:0;overflow:hidden;background:transparent;color:#f8f9fd;font-family:'Malgun Gothic','Segoe UI',sans-serif}
+button{font:inherit;cursor:pointer}
+.shell{
+  position:relative;height:100%;width:100%;border-radius:var(--round);overflow:hidden;
+  background:rgba(0,0,0,var(--bg));
+  box-shadow:0 0 calc(var(--glow)*22px) rgba(255,0,255,.20),0 0 calc(var(--glow)*26px) rgba(95,200,255,.14),inset 0 0 0 1px rgba(255,255,255,.03);
+}
+.shell::before{
+  content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  background:
+    radial-gradient(ellipse at 2% 0%,rgba(255,0,255,.085),transparent 40%),
+    radial-gradient(ellipse at 100% 100%,rgba(95,200,255,.07),transparent 38%),
+    linear-gradient(180deg,rgba(255,255,255,.04),transparent 12%);
+}
+.shell::after{
+  content:"";position:absolute;inset:0;padding:2px;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(90deg,#ff3fce 0%,#c86fff 26%,#63afff 62%,#3ef0ff 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+}
+.inner{position:relative;width:100%;height:100%;padding:clamp(12px,2.5vw,23px) clamp(14px,3vw,27px) clamp(10px,1.9vw,17px);display:grid;grid-template-rows:26% minmax(0,1fr);gap:4px}
+.header{min-height:0;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.month-head{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.eyebrow{font-size:clamp(8px,1.5vw,11px);letter-spacing:.24em;font-weight:700;color:#a8a9b9}
+.title{margin:0;white-space:nowrap;line-height:1.05;letter-spacing:-.075em;font-size:clamp(27px,6.8vw,56px);font-weight:860;color:#fff}
+.title em{font-style:normal;background:linear-gradient(90deg,#ff36cf 0%,#bc65ff 45%,#61b5ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tools{display:flex;flex-direction:row;align-items:center;justify-content:flex-end;gap:12px;flex-shrink:0}
+.todayinfo{font-size:clamp(10px,2.0vw,17px);font-weight:780;color:#f4f5fa;white-space:nowrap;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+.navrow{display:flex;gap:7px;align-items:center}
+.nav{height:clamp(28px,5.9vw,37px);width:clamp(28px,5.9vw,37px);display:grid;place-items:center;border:1px solid rgba(255,255,255,.18);background:#101017;border-radius:50%;color:#fff;font-size:clamp(18px,3.4vw,24px);line-height:1;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}
+.nav:hover{border-color:#ff4dd6;background:#231129}
+.calendar{display:grid;grid-template-rows:12% minmax(0,1fr);min-height:0}
+.week,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));text-align:center}
+.week{align-items:center}
+.week span{font-size:clamp(12px,2.7vw,20px);font-weight:850;color:#d7dae4}
+.week .sun{color:var(--sun)}.week .sat{color:var(--sat)}
+.days{grid-template-rows:repeat(6,minmax(0,1fr));min-height:0}
+.day{position:relative;display:flex;justify-content:center;align-items:center;min-width:0;min-height:0;font-variant-numeric:tabular-nums;font-size:clamp(18px,4.05vw,35px);font-weight:830;letter-spacing:-.04em;color:#f9faff}
+.day.sun{color:var(--sun)}.day.sat{color:var(--sat)}
+.day.out{color:#4f515d}.day.out.sun{color:#673b46}.day.out.sat{color:#374d6a}
+.day.today{z-index:0;color:#fff;font-weight:920}
+.day.today::before{content:"";position:absolute;width:min(78%,6vh);height:min(78%,6vh);min-width:30px;min-height:30px;border:2px solid #ff5ed8;background:radial-gradient(circle at 35% 35%,rgba(255,255,255,.08),transparent 52%),linear-gradient(135deg,rgba(255,0,255,.18),rgba(98,168,255,.12));border-radius:50%;z-index:-1;box-shadow:0 0 12px rgba(255,0,255,.20),0 0 18px rgba(95,200,255,.10)}
+@media(min-width:840px){.inner{padding:22px 34px 20px}.tools{gap:16px}.calendar{grid-template-rows:13% 1fr}.day{font-size:clamp(28px,2.6vw,45px)}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="inner">
+    <header class="header">
+      <div class="month-head">
+        <div class="eyebrow">CALENDAR · MONTHLY</div>
+        <h1 class="title" id="monthTitle"></h1>
+      </div>
+      <div class="tools">
+        <div class="todayinfo" id="todayInfo"></div>
+        <div class="navrow">
+          <button class="nav" id="prev" aria-label="이전 달">‹</button>
+          <button class="nav" id="next" aria-label="다음 달">›</button>
+        </div>
+      </div>
+    </header>
+    <section class="calendar">
+      <div class="week"><span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span class="sat">토</span></div>
+      <div class="days" id="days"></div>
+    </section>
+  </div>
+</main>
+<script>
+const query=new URLSearchParams(location.search),hex=/^#[0-9a-f]{6}$/i.test(query.get('color')||'')?query.get('color'):'#ff00ff';
+const rgb=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)).join(',');
+function bounded(s,a,b,d){if(s===null||s==='')return d;const v=Number(s);return Number.isFinite(v)?Math.max(a,Math.min(b,v)):d}
+const root=document.documentElement;
+root.style.setProperty('--accent',hex);root.style.setProperty('--rgb',rgb);
+root.style.setProperty('--bg',bounded(query.get('opacity'),0,100,92)/100);
+root.style.setProperty('--round',bounded(query.get('round'),18,56,28)+'px');
+root.style.setProperty('--glow',bounded(query.get('glow'),0,100,42)/100);
+let now=new Date(),year=now.getFullYear(),month=now.getMonth();
+const weekdays=['일요일','월요일','화요일','수요일','목요일','금요일','토요일'];
+function render(){
+  document.getElementById('monthTitle').innerHTML=year+'년 <em>'+String(month+1)+'월</em>';
+  const start=new Date(year,month,1).getDay(), daysEl=document.getElementById('days');
+  daysEl.replaceChildren();
+  for(let i=0;i<42;i++){
+    const date=new Date(year,month,i-start+1),node=document.createElement('span'),col=i%7;
+    node.className='day'+(col===0?' sun':col===6?' sat':'')+(date.getMonth()!==month?' out':'')+(date.toDateString()===now.toDateString()?' today':'');
+    node.textContent=date.getDate();
+    daysEl.appendChild(node);
+  }
+}
+function tick(){
+  const old=now; now=new Date();
+  document.getElementById('todayInfo').textContent=now.getFullYear()+'년 '+(now.getMonth()+1)+'월 '+now.getDate()+'일 '+weekdays[now.getDay()];
+  if(old.toDateString()!==now.toDateString()) render();
+}
+document.getElementById('prev').onclick=()=>{month--;if(month<0){month=11;year--}render()};
+document.getElementById('next').onclick=()=>{month++;if(month>11){month=0;year++}render()};
+render(); tick(); setInterval(tick,10000);
+</script>
+</body>
+</html>
