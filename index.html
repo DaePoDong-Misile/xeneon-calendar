@@ -1,27 +1,46 @@
-<!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>XENEON EDGE RGB Calendar v10</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>XENEON EDGE Calendar · Rebuild</title>
 <style>
-:root{--bg-opacity:.92;--radius:30px}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:transparent!important;color:#f9f9ff;font-family:'Malgun Gothic','Segoe UI',sans-serif;overflow:hidden}button{cursor:pointer;font:inherit}
-.panel{position:relative;width:100%;height:100%;border-radius:var(--radius);overflow:hidden;background:rgba(0,0,0,var(--bg-opacity))}
-.borderline{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}.borderline rect{fill:none;stroke:url(#neonLine);stroke-width:2.5px}
-.content{position:relative;z-index:1;height:100%;width:100%;display:grid;grid-template-rows:26% 74%;padding:clamp(12px,2.5vw,24px) clamp(15px,2.8vw,28px) clamp(10px,1.8vw,18px);gap:2px}
-.top{min-height:0;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.date-wrap{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:6px}
-.date-chip{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;padding:5px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.02);box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}
-.date-dot{width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,#ff49d3,#7dd0ff);box-shadow:0 0 8px rgba(255,0,255,.35)}
-.date-label{font-size:clamp(9px,1.4vw,11px);letter-spacing:.22em;font-weight:800;color:#aeb1bf;text-transform:uppercase}
-.date-title{margin:0;min-width:0;white-space:nowrap;font-weight:870;font-size:clamp(20px,4.7vw,46px);letter-spacing:-.065em;line-height:1.06;color:#fff;text-shadow:0 0 18px rgba(255,255,255,.03)}
-.date-title .month{background:linear-gradient(90deg,#ff42d3 0%,#ba77ff 52%,#6ec7ff 100%);color:transparent;-webkit-background-clip:text;background-clip:text}
-.date-underline{width:min(260px,68%);height:2px;border-radius:999px;background:linear-gradient(90deg,rgba(255,66,211,.9),rgba(111,198,255,.95));box-shadow:0 0 10px rgba(255,0,255,.18)}
-.controls{display:flex;gap:7px;flex-shrink:0;align-self:flex-start}.controls button{width:clamp(30px,4.8vw,40px);height:clamp(30px,4.8vw,40px);border:1px solid #666778;border-radius:50%;background:rgba(255,255,255,.02);color:#fff;font-size:24px;display:grid;place-items:center;line-height:1;box-shadow:inset 0 0 0 1px rgba(255,255,255,.01)}.controls button:hover{border-color:#ff42d3;background:rgba(255,255,255,.04)}
-.calendar{display:grid;grid-template-rows:12% 88%;min-height:0}.week,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));text-align:center}.week{align-items:center}.week span{font-size:clamp(12px,2.35vw,20px);font-weight:800;color:#e7e8f4}.week .sun{color:#ff647b}.week .sat{color:#69b8ff}.days{min-height:0;grid-template-rows:repeat(6,minmax(0,1fr))}.day{position:relative;min-height:0;display:flex;align-items:center;justify-content:center;font-size:clamp(18px,4vw,36px);font-weight:800;color:#fff;font-variant-numeric:tabular-nums}.day.sun{color:#ff647b}.day.sat{color:#69b8ff}.day.out{color:#595967}.day.out.sun{color:#7e4750}.day.out.sat{color:#425d78}.day.today{color:#fff;z-index:1}.day.today:before{content:"";position:absolute;width:min(65%,6vh);height:min(65%,6vh);min-width:29px;min-height:29px;border:2px solid #e85bfb;border-radius:50%;z-index:-1;background:transparent}
-@media(max-width:640px){.content{padding:11px 14px}.date-title{font-size:clamp(18px,4.4vw,28px)}.day{font-size:clamp(16px,3.7vw,27px)}.date-underline{width:min(180px,72%)}}
-</style></head>
-<body><main class="panel"><svg class="borderline" preserveAspectRatio="none"><defs><linearGradient id="neonLine" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff43c5"/><stop offset="33%" stop-color="#ff00ff"/><stop offset="66%" stop-color="#a67bff"/><stop offset="100%" stop-color="#38d5ff"/></linearGradient></defs><rect id="outline" x="1.5" y="1.5" width="calc(100% - 3px)" height="calc(100% - 3px)" rx="30" ry="30"/></svg><div class="content"><header class="top"><div class="date-wrap"><div class="date-chip"><span class="date-dot"></span><span class="date-label">TODAY</span></div><h1 class="date-title" id="dateTitle"></h1><div class="date-underline"></div></div><nav class="controls"><button id="prev" aria-label="이전 달">‹</button><button id="next" aria-label="다음 달">›</button></nav></header><section class="calendar"><div class="week"><span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span class="sat">토</span></div><div class="days" id="days"></div></section></div></main><script>
-(function(){var p=new URLSearchParams(location.search);function val(name,f,a,b){var v=p.get(name),n=Number(v);return v!==null&&v!==''&&isFinite(n)?Math.max(a,Math.min(b,n)):f}var alpha=val('opacity',92,0,100),round=val('round',30,18,56);document.documentElement.style.setProperty('--bg-opacity',alpha/100);document.documentElement.style.setProperty('--radius',round+'px');var svg=document.querySelector('.borderline'),rect=document.getElementById('outline');function borderSize(){var w=svg.clientWidth,h=svg.clientHeight;rect.setAttribute('x','1.5');rect.setAttribute('y','1.5');rect.setAttribute('width',Math.max(0,w-3));rect.setAttribute('height',Math.max(0,h-3));rect.setAttribute('rx',Math.max(0,round-1.5));rect.setAttribute('ry',Math.max(0,round-1.5))}borderSize();window.addEventListener('resize',borderSize);
-var now=new Date(),year=now.getFullYear(),month=now.getMonth(),weekday=['일요일','월요일','화요일','수요일','목요일','금요일','토요일'];function render(){var same=(year===now.getFullYear()&&month===now.getMonth()),title=document.getElementById('dateTitle');title.innerHTML=same?year+'년 <span class="month">'+(month+1)+'월</span> '+now.getDate()+'일 '+weekday[now.getDay()]:year+'년 <span class="month">'+(month+1)+'월</span>';var first=new Date(year,month,1).getDay(),days=document.getElementById('days');days.textContent='';for(var i=0;i<42;i++){var d=new Date(year,month,i-first+1),cell=document.createElement('span'),col=i%7;cell.className='day'+(col===0?' sun':col===6?' sat':'')+(d.getMonth()!==month?' out':'')+(d.toDateString()===now.toDateString()?' today':'');cell.textContent=d.getDate();days.appendChild(cell)}}document.getElementById('prev').onclick=function(){month--;if(month<0){month=11;year--}render()};document.getElementById('next').onclick=function(){month++;if(month>11){month=0;year++}render()};render();setInterval(function(){var old=now.toDateString();now=new Date();if(now.toDateString()!==old)render()},30000)})();
+:root{--background-opacity:1;--corner:32px;--edge:#ff00ff}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;padding:0;background:transparent!important;overflow:hidden;color:#fff;font-family:'Malgun Gothic','Segoe UI',sans-serif;color-scheme:dark}
+#calendar{position:relative;width:100%;height:100%;border-radius:var(--corner);overflow:hidden;background:rgba(0,0,0,var(--background-opacity));isolation:isolate}
+#border{position:absolute;inset:0;z-index:3;width:100%;height:100%;pointer-events:none;overflow:visible}
+#border rect{fill:none;stroke:url(#edgeGradient);stroke-width:2.8}
+.content{position:relative;z-index:2;width:100%;height:100%;padding:clamp(11px,2.6%,23px) clamp(15px,3%,30px) clamp(9px,2%,17px);display:flex;flex-direction:column}
+header{height:25%;min-height:0;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.heading{flex:1;min-width:0;display:flex;align-items:baseline;gap:clamp(6px,1.3vw,15px);white-space:nowrap;font-weight:850;letter-spacing:-.06em;line-height:1}
+.heading .year{font-size:clamp(28px,5vw,54px);color:#f7f8ff}
+.heading .month{font-size:clamp(34px,6vw,66px);color:#fc84ed;text-shadow:0 0 8px rgba(255,0,255,.15)}
+.heading .date{font-size:clamp(24px,4.4vw,47px);color:#fff}
+.heading .weekday{font-size:clamp(17px,2.6vw,30px);color:#a7d9ff;letter-spacing:-.04em}
+.controls{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.controls button{width:clamp(30px,4.8vw,44px);height:clamp(30px,4.8vw,44px);border-radius:50%;border:1px solid #767580;color:#fff;background:#19171c;font-size:27px;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;cursor:pointer}
+.controls button:hover{border-color:#ff7ee9;background:#28202a}
+.grid{flex:1;min-height:0;display:grid;grid-template-rows:12% 88%}
+.week,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));text-align:center}
+.week{align-items:center}.week span{font-size:clamp(14px,2.4vw,24px);font-weight:800;color:#e4e8fa}
+.week .sun,.day.sun{color:#ff677c}.week .sat,.day.sat{color:#78bcff}
+.days{grid-template-rows:repeat(6,minmax(0,1fr));min-height:0}
+.day{display:flex;align-items:center;justify-content:center;position:relative;font-size:clamp(19px,4vw,39px);font-weight:800;color:#f7f8ff;font-variant-numeric:tabular-nums;z-index:0}
+.day.blank{visibility:hidden}.day.today{color:#fff}.day.today:before{content:"";position:absolute;z-index:-1;width:clamp(33px,5.9vw,55px);height:clamp(33px,5.9vw,55px);border-radius:50%;border:2px solid #ff6ad9;background:transparent}
+/* No secondary panels, rectangular fills, shadows or tinted overlays. */
+@media(max-aspect-ratio:1.3){.content{padding:12px}.heading{gap:5px}.heading .year{font-size:clamp(17px,3.6vw,30px)}.heading .month{font-size:clamp(23px,4.5vw,37px)}.heading .date{font-size:clamp(16px,3vw,25px)}.heading .weekday{font-size:clamp(12px,2vw,17px)}.day{font-size:clamp(16px,3.4vw,28px)}}
+</style></head><body>
+<main id="calendar">
+<svg id="border" aria-hidden="true"><defs><linearGradient id="edgeGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff48c7"/><stop offset="30%" stop-color="#ff00ff"/><stop offset="68%" stop-color="#a887ff"/><stop offset="100%" stop-color="#48d7ff"/></linearGradient></defs><rect id="edgeRect"/></svg>
+<div class="content"><header><div class="heading" id="heading"></div><div class="controls"><button id="prev" aria-label="이전 달">‹</button><button id="next" aria-label="다음 달">›</button></div></header><section class="grid"><div class="week"><span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span class="sat">토</span></div><div class="days" id="days"></div></section></div></main>
+<script>
+(function(){
+var query=new URLSearchParams(location.search);
+function num(k,d,min,max){var raw=query.get(k),n=Number(raw);return raw!==null&&raw!==''&&Number.isFinite(n)?Math.max(min,Math.min(max,n)):d}
+var opacity=num('opacity',100,0,100),radius=num('round',32,18,64);
+document.documentElement.style.setProperty('--background-opacity',opacity/100);
+document.documentElement.style.setProperty('--corner',radius+'px');
+function resizeEdge(){var svg=document.getElementById('border'),r=document.getElementById('edgeRect'),w=svg.clientWidth,h=svg.clientHeight;r.setAttribute('x',1.4);r.setAttribute('y',1.4);r.setAttribute('width',Math.max(0,w-2.8));r.setAttribute('height',Math.max(0,h-2.8));r.setAttribute('rx',Math.max(0,radius-1.4));r.setAttribute('ry',Math.max(0,radius-1.4))}
+window.addEventListener('resize',resizeEdge);resizeEdge();
+var current=new Date(),y=current.getFullYear(),m=current.getMonth(),names=['일요일','월요일','화요일','수요일','목요일','금요일','토요일'];
+function render(){var same=y===current.getFullYear()&&m===current.getMonth();var head=document.getElementById('heading');head.replaceChildren();function part(cls,txt){var el=document.createElement('span');el.className=cls;el.textContent=txt;head.appendChild(el)}part('year',y+'년');part('month',(m+1)+'월');if(same){part('date',current.getDate()+'일');part('weekday',names[current.getDay()])}
+var begin=new Date(y,m,1).getDay(),count=new Date(y,m+1,0).getDate(),days=document.getElementById('days');days.replaceChildren();for(var i=0;i<42;i++){var day=i-begin+1,el=document.createElement('span');el.className='day';if(i%7===0)el.classList.add('sun');if(i%7===6)el.classList.add('sat');if(day<1||day>count){el.classList.add('blank')}else{el.textContent=day;if(same&&day===current.getDate())el.classList.add('today')}days.appendChild(el)}}
+document.getElementById('prev').onclick=function(){m--;if(m<0){m=11;y--}render()};document.getElementById('next').onclick=function(){m++;if(m>11){m=0;y++}render()};
+render();setInterval(function(){var old=current.toDateString();current=new Date();if(current.toDateString()!==old)render()},60000)
+})();
 </script></body></html>
